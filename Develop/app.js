@@ -29,12 +29,21 @@ app.get("/", function (req, res) {
 
 //GET data
 app.get("/api/notes", function (req, res) {
-    res.json(noteData);
+    res.json(notes);
 })
 
 // write note
 
-//app.post("")
+app.post("/api/notes", function(req, res) {
+    if(notes.length === 0) {
+        req.body.id = 0;
+    } else {
+        req.body.id = notes[notes.length -1].id + 1;
+    }
+    notes.push(req.body)
+    res.json(notes);
+    fs.writeFileSync("Develop/db/db.json", JSON.stringify(notesData))
+})
 
 
 
