@@ -42,8 +42,24 @@ app.post("/api/notes", function(req, res) {
     }
     notes.push(req.body)
     res.json(notes);
-    fs.writeFileSync("Develop/db/db.json", JSON.stringify(notesData))
+    addNote();
 })
+
+//Remove Note
+app.delete("/api/notes:id", function(req, res) {
+    for (var i = 0; i < notes.length; i++) {
+        if(req.params.id === notes[i].id) {
+            notes.splice(i, 1);
+        }
+    }
+    res.json(notes);
+    addNote();
+})
+
+//write to db file
+function addNote() {
+    fs.writeFileSync("Develop/db/db.json", JSON.stringify(notesData))
+}
 
 
 
